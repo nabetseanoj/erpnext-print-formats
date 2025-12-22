@@ -112,27 +112,31 @@
 }
 
 .pf table.items thead th {
-  font-size: 10px;
+  font-size: 9px; /* Reduced from 10px */
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #555;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 8px 6px;
+  letter-spacing: 0.05em;
+  color: #666; /* Softer color */
+  border-bottom: 2px solid #eee; /* Thicker header border */
+  padding: 6px 4px; /* Compact padding */
+  font-weight: 600;
+  background-color: #fafafa; /* Slight background for header */
 }
 
 .pf table.items tbody td {
   border-bottom: 1px solid #f0f0f0;
-  padding: 8px 6px;
-  vertical-align: top;
+  padding: 6px 4px; /* Compact padding */
+  vertical-align: middle; /* Center vertically */
+  font-size: 10px; /* Reduced from default/11px */
 }
 
 .pf .col-idx {
-  width: 22px;
+  width: 20px;
   text-align: center;
-  color: #666;
+  color: #999;
+  font-size: 9px;
 }
 .pf .col-img {
-  width: 44px;
+  width: 40px;
   text-align: center;
 }
 .pf .col-item {
@@ -142,27 +146,32 @@
   width: auto;
 }
 .pf .col-qty {
-  width: 60px;
+  width: 50px;
   text-align: right;
+  font-weight: 600;
 }
 .pf .col-rate {
-  width: 90px;
+  width: 80px;
   text-align: right;
   white-space: nowrap;
 }
 .pf .col-amt {
-  width: 95px;
+  width: 90px;
   text-align: right;
   white-space: nowrap;
   font-weight: 700;
+  color: #000;
 }
 
 .pf .pimg {
-  width: 36px;
-  height: 36px;
-  object-fit: cover;
+  width: 32px;
+  height: 32px;
+  object-fit: contain; /* Changed from cover to see full product */
   border: 1px solid #eee;
-  border-radius: 6px;
+  border-radius: 4px;
+  background-color: #fff;
+  display: block;
+  margin: 0 auto;
 }
 
 .pf .noimg {
