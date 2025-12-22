@@ -1,0 +1,220 @@
+{# ============================ PRINT FORMAT: Cotización (Quotation) - Chile -
+RUT empresa/cliente - CLP sin decimales - Imagen de producto si existe -
+wkhtmltopdf friendly ============================ #} {% set currency = "CLP" %}
+{% set items = doc.items or [] %} {# RUT Empresa #} {% set company_rut =
+frappe.db.get_value("Company", doc.company, "tax_id") if doc.company else "" %}
+{# RUT Cliente (en ERPNext suele estar en Customer.tax_id) #} {% set
+customer_rut = frappe.db.get_value("Customer", doc.customer, "tax_id") if
+doc.customer else "" %} {# helpers dinero CLP #} {% macro clp(val) -%} {{
+frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
+%}
+
+<div class="pf">
+  <!-- Header -->
+  <div class="header">
+    <div class="h-left">
+      <div class="title">COTIZACIÓN</div>
+      <div class="meta">
+        <div>
+          <span class="k">N°</span> <span class="v">{{ doc.name }}</span>
+        </div>
+        <div>
+          <span class="k">Fecha</span>
+          <span class="v">{{ frappe.format_date(doc.transaction_date) }}</span>
+        </div>
+        {% if doc.valid_till %}
+        <div>
+          <span class="k">Válida hasta</span>
+          <span class="v">{{ frappe.format_date(doc.valid_till) }}</span>
+        </div>
+        {% endif %} {% if doc.po_no %}
+        <div>
+          <span class="k">OC Cliente</span>
+          <span class="v">{{ doc.po_no }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="h-right">
+      <div class="company">{{ doc.company }}</div>
+      {% if company_rut %}
+      <div class="muted"><span class="k2">RUT</span> {{ company_rut }}</div>
+      {% endif %} {% if doc.company_address %}
+      <div class="muted">
+        {{ doc.company_address_display or doc.company_address }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Parties -->
+  <div class="card">
+    <div class="grid2">
+      <div>
+        <div class="label">Cliente</div>
+        <div class="strong">{{ doc.customer_name or "-" }}</div>
+        {% if customer_rut %}
+        <div class="muted"><span class="k2">RUT</span> {{ customer_rut }}</div>
+        {% endif %} {% if doc.customer_address %}
+        <div class="muted">
+          {{ doc.customer_address_display or doc.customer_address }}
+        </div>
+        {% endif %} {% if doc.contact_person %}
+        <div class="muted">
+          Contacto: {{ doc.contact_display or doc.contact_person }}
+        </div>
+        {% endif %} {% if doc.contact_email %}
+        <div class="muted">{{ doc.contact_email }}</div>
+        {% endif %}
+      </div>
+
+      <div>
+        <div class="label">Condiciones comerciales</div>
+        <div class="row">
+          <span class="k">Vendedor</span
+          ><span class="v">{{ doc.owner or "-" }}</span>
+        </div>
+        <div class="row">
+          <span class="k">Lista de precios</span
+          ><span class="v">{{ doc.selling_price_list or "-" }}</span>
+        </div>
+        <div class="row">
+          <span class="k">Pago</span
+          ><span class="v">{{ doc.payment_terms_template or "-" }}</span>
+        </div>
+        {% if doc.delivery_date %}
+        <div class="row">
+          <span class="k">Entrega</span
+          ><span class="v">{{ frappe.format_date(doc.delivery_date) }}</span>
+        </div>
+        {% endif %} {% if doc.incoterm %}
+        <div class="row">
+          <span class="k">Incoterm</span
+          ><span class="v">{{ doc.incoterm }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Items -->
+  <div class="card avoid-break">
+    <div class="section-title">Detalle</div>
+
+    <table class="items">
+      <thead>
+        <tr>
+          <th class="col-idx">#</th>
+          <th class="col-img">Img</th>
+          <th class="col-item">Producto</th>
+          <th class="col-desc">Descripción</th>
+          <th class="col-qty">Cant.</th>
+          <th class="col-rate">Precio</th>
+          <th class="col-amt">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for it in items %} {# Imagen: primero la del Quotation Item, si no,
+        la del Item master #} {% set raw_img = it.image or
+        (frappe.db.get_value("Item", it.item_code, "image") if it.item_code else
+        "") %} {% if raw_img and not raw_img.startswith("http") %} {% set img =
+        frappe.utils.get_url(raw_img) %} {% else %} {% set img = raw_img %} {%
+        endif %}
+
+        <tr class="avoid-break">
+          <td class="col-idx">{{ loop.index }}</td>
+
+          <td class="col-img">
+            {% if img %}
+            <img class="pimg" src="{{ img }}" alt="img" />
+            {% else %}
+            <div class="noimg">—</div>
+            {% endif %}
+          </td>
+
+          <td class="col-item">
+            <div class="strong">{{ it.item_name or it.item_code }}</div>
+            {% if it.item_code %}
+            <div class="muted">{{ it.item_code }}</div>
+            {% endif %}
+          </td>
+
+          <td class="col-desc">
+            <div class="desc">
+              {{ (it.description or "") | replace("\n", "<br />") }}
+            </div>
+          </td>
+
+          <td class="col-qty">
+            {{ frappe.format_value(it.qty, {"fieldtype":"Float"}) }} {% if
+            it.uom %}
+            <div class="muted">{{ it.uom }}</div>
+            {% endif %}
+          </td>
+
+          <td class="col-rate">{{ clp(it.rate) }}</td>
+
+          <td class="col-amt">{{ clp(it.amount) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Totals + Taxes -->
+  <div class="totals-wrap">
+    <div class="notes">
+      {% if doc.terms %}
+      <div class="section-title">Términos</div>
+      <div class="muted terms">{{ doc.terms | replace("\n", "<br />") }}</div>
+      {% endif %} {% if doc.note %}
+      <div class="section-title">Nota</div>
+      <div class="muted">{{ doc.note | replace("\n", "<br />") }}</div>
+      {% endif %}
+    </div>
+
+    <div class="totals">
+      <div class="section-title">Resumen</div>
+
+      <div class="trow">
+        <span class="k">Neto</span>
+        <span class="v">{{ clp(doc.total) }}</span>
+      </div>
+
+      {% if doc.discount_amount and doc.discount_amount != 0 %}
+      <div class="trow">
+        <span class="k">Descuento</span>
+        <span class="v">- {{ clp(doc.discount_amount) }}</span>
+      </div>
+      {% endif %} {# Impuestos (IVA u otros) #} {% if doc.taxes and
+      doc.taxes|length %} {% for tx in doc.taxes %} {% if tx.tax_amount and
+      tx.tax_amount != 0 %}
+      <div class="trow">
+        <span class="k"
+          >{{ tx.description or tx.account_head or "Impuesto" }}</span
+        >
+        <span class="v">{{ clp(tx.tax_amount) }}</span>
+      </div>
+      {% endif %} {% endfor %} {% endif %}
+
+      <div class="trow grand">
+        <span class="k">TOTAL</span>
+        <span class="v">{{ clp(doc.grand_total) }}</span>
+      </div>
+
+      {% if doc.in_words %}
+      <div class="in-words muted">{{ doc.in_words }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="muted">
+      Documento generado desde ERPNext • {{
+      frappe.format_date(frappe.utils.nowdate()) }}
+    </div>
+    <div class="muted right">Emitido por: {{ doc.owner or "-" }}</div>
+  </div>
+</div>
