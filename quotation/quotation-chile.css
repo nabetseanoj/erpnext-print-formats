@@ -135,12 +135,9 @@
   color: #999;
   font-size: 9px;
 }
-.pf .col-img {
-  width: 40px;
-  text-align: center;
-}
+/* .col-img removed */
 .pf .col-item {
-  width: 170px;
+  width: 250px; /* Increased width since it now holds the image */
 }
 .pf .col-desc {
   width: auto;
@@ -163,19 +160,23 @@
   color: #000;
 }
 
+.pf .item-image {
+  margin-bottom: 6px;
+}
+
 .pf .pimg {
-  width: 32px;
-  height: 32px;
-  object-fit: contain; /* Changed from cover to see full product */
+  width: 80px; /* Larger image */
+  height: 80px;
+  object-fit: contain;
   border: 1px solid #eee;
   border-radius: 4px;
   background-color: #fff;
   display: block;
-  margin: 0 auto;
 }
 
 .pf .noimg {
   color: #bbb;
+  display: none; /* Hide if no image */
 }
 
 .pf .desc {

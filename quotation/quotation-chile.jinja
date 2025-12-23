@@ -106,7 +106,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
       <thead>
         <tr>
           <th class="col-idx">#</th>
-          <th class="col-img">Img</th>
+          <!-- Img column removed/merged -->
           <th class="col-item">Producto</th>
           <th class="col-desc">Descripción</th>
           <th class="col-qty">Cant.</th>
@@ -115,30 +115,31 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
         </tr>
       </thead>
       <tbody>
-        {% for it in items %} {# Imagen logic breakdown: 1. Check if Quotation
-        Item has an image directly. 2. Check Item Master for 'image' or
-        'website_image' via db.get_value. 3. Ensure URL is full for wkhtmltopdf.
-        #} {% set item_img_path = it.image %} {% if not item_img_path and
-        it.item_code %} {% set item_img_path = frappe.db.get_value("Item",
-        it.item_code, "image") %} {% endif %} {# Construct full URL if we have a
-        path #} {% set img_src = "" %} {% if item_img_path %} {% if
-        item_img_path.startswith("http") %} {% set img_src = item_img_path %} {%
-        else %} {# If relative path, try to make it absolute.
-        frappe.utils.get_url() returns site root URL. #} {% set img_src =
-        frappe.utils.get_url(item_img_path) %} {% endif %} {% endif %}
+        {% for it in items %}
+        {# Logic to get image path #}
+        {% set item_img_path = it.image %}
+        {% if not item_img_path and it.item_code %}
+             {% set item_img_path = frappe.db.get_value("Item", it.item_code, "image") %}
+        {% endif %}
+
+        {% set img_src = "" %}
+        {% if item_img_path %}
+            {# Use raw path so browser resolves port automatically. 
+               Avoids get_url() mismatch when host_name config is missing port. 
+            #}
+            {% set img_src = item_img_path %}
+        {% endif %}
 
         <tr class="avoid-break">
           <td class="col-idx">{{ loop.index }}</td>
 
-          <td class="col-img">
-            {% if img_src %}
-            <img class="pimg" src="{{ img_src }}" alt="img" />
-            {% else %}
-            <div class="noimg">—</div>
-            {% endif %}
-          </td>
-
           <td class="col-item">
+            {% if img_src %}
+            <div class="item-image">
+                <img class="pimg" src="{{ img_src }}" alt="img" />
+            </div>
+            {% endif %}
+            
             <div class="strong">{{ it.item_name or it.item_code }}</div>
             {% if it.item_code %}
             <div class="muted">{{ it.item_code }}</div>
