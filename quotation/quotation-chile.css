@@ -53,6 +53,7 @@
   font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.06em;
+  margin: 0;
 }
 /* Ensure image inside header behaves */
 .pf .hr-logo img {
@@ -72,10 +73,9 @@
 }
 .pf .hr-logo {
   display: table-cell;
-  vertical-align: top;
-  width: 1%; /* Force minimum width to fit content */
-  white-space: nowrap;
-  padding-right: 20px;
+  vertical-align: middle; /* Align vertically with text */
+  width: 80px; /* Fixed width to ensure space for logo */
+  padding-left: 20px;
 }
 .pf .hr-details {
   display: table-cell;
