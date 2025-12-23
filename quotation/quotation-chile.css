@@ -54,10 +54,33 @@
   font-weight: 800;
   letter-spacing: 0.06em;
 }
+/* Ensure image inside header behaves */
+.pf .hr-logo img {
+  display: block;
+  max-width: 250px;
+}
+
 .pf .company {
   font-size: 12px;
-  font-weight: 800;
-  text-align: right;
+  font-weight: 700;
+}
+
+/* New: Header Right Split */
+.pf .hr-table {
+  display: table;
+  width: 100%;
+}
+.pf .hr-logo {
+  display: table-cell;
+  vertical-align: top;
+  width: 1%; /* Force minimum width to fit content */
+  white-space: nowrap;
+  padding-right: 20px;
+}
+.pf .hr-details {
+  display: table-cell;
+  vertical-align: top;
+  text-align: left; /* Align details to left relative to this cell, or right? User implies standard text flow */
 }
 
 .pf .meta {

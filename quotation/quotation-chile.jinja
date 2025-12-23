@@ -1,8 +1,10 @@
 {# ============================ PRINT FORMAT: Cotización (Quotation) - Chile -
 RUT empresa/cliente - CLP sin decimales - Imagen de producto si existe -
 wkhtmltopdf friendly ============================ #} {% set currency = "CLP" %}
-{% set items = doc.items or [] %} {# RUT Empresa #} {% set company_rut =
-frappe.db.get_value("Company", doc.company, "tax_id") if doc.company else "" %}
+{% set items = doc.items or [] %} 
+{# Fetch full Company doc for Logo, Phone, Website #}
+{% set company_doc = frappe.get_doc("Company", doc.company) %}
+{# RUT Empresa #} {% set company_rut = company_doc.tax_id %}
 {# RUT Cliente (en ERPNext suele estar en Customer.tax_id) #} {% set
 customer_rut = frappe.db.get_value("Customer", doc.customer, "tax_id") if
 doc.customer else "" %} {# helpers dinero CLP #} {% macro clp(val) -%} {{
@@ -13,7 +15,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
   <!-- Header -->
   <div class="header">
     <div class="h-left">
-      <div class="title">COTIZACIÓN</div>
+      <div class="title" style="margin-top: 10px;">COTIZACIÓN</div>
       <div class="meta">
         <div>
           <span class="k">N°</span> <span class="v">{{ doc.name }}</span>
@@ -37,14 +39,33 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
     </div>
 
     <div class="h-right">
-      <div class="company">{{ doc.company }}</div>
-      {% if company_rut %}
-      <div class="muted"><span class="k2">RUT</span> {{ company_rut }}</div>
-      {% endif %} {% if doc.company_address %}
-      <div class="muted">
-        {{ doc.company_address_display or doc.company_address }}
+      <div class="hr-table">
+        <div class="hr-logo">
+          <img src="https://domosdelsur.cl/logo-black.svg" style="max-width: 250px; max-height: 80px;" />
+        </div>
+        <div class="hr-details">
+          <div class="company">{{ doc.company }}</div>
+          {% if company_rut %}
+          <div class="muted"><span class="k2">RUT</span> {{ company_rut }}</div>
+          {% endif %} 
+          
+          {% if company_doc.address %}
+          <div class="muted">{{ company_doc.address }}</div>
+          {% endif %}
+          
+          {% if company_doc.phone_no %}
+          <div class="muted">Tel: {{ company_doc.phone_no }}</div>
+          {% endif %}
+          
+          {% if company_doc.website %}
+          <div class="muted">{{ company_doc.website }}</div>
+          {% endif %}
+          
+          {% if company_doc.email %}
+          <div class="muted">{{ company_doc.email }}</div>
+          {% endif %}
+        </div>
       </div>
-      {% endif %}
     </div>
   </div>
 
@@ -73,16 +94,16 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
         <div class="label">Condiciones comerciales</div>
         <div class="row">
           <span class="k">Vendedor</span
-          ><span class="v">{{ doc.owner or "-" }}</span>
+          ><span class="v">{{ frappe.db.get_value("User", doc.owner, "full_name") or doc.owner }}</span>
         </div>
-        <div class="row">
+        {# <div class="row">
           <span class="k">Lista de precios</span
           ><span class="v">{{ doc.selling_price_list or "-" }}</span>
-        </div>
-        <div class="row">
+        </div> #}
+        {# <div class="row">
           <span class="k">Pago</span
           ><span class="v">{{ doc.payment_terms_template or "-" }}</span>
-        </div>
+        </div> #}
         {% if doc.delivery_date %}
         <div class="row">
           <span class="k">Entrega</span
@@ -221,6 +242,6 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
       Documento generado desde ERPNext • {{
       frappe.format_date(frappe.utils.nowdate()) }}
     </div>
-    <div class="muted right">Emitido por: {{ doc.owner or "-" }}</div>
+    <div class="muted right">Emitido por: {{ frappe.db.get_value("User", doc.owner, "full_name") or doc.owner }}</div>
   </div>
 </div>
