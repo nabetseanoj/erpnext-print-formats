@@ -120,7 +120,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
   </div>
 
   <!-- Items -->
-  <div class="card avoid-break">
+  <div class="card">
     <div class="section-title">Detalle</div>
 
     <table class="items">
@@ -192,6 +192,30 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
   <!-- Totals + Taxes -->
   <div class="totals-wrap">
     <div class="notes">
+      {% if doc.payment_schedule and doc.payment_schedule|length > 0 %}
+      <div class="section-title" style="margin-top: 10px;">Calendario de Pago</div>
+      <table class="items" style="width: 100%; margin-bottom: 15px;">
+        <thead>
+            <tr>
+                <th style="text-align: left;">Cuota</th>
+                <th style="text-align: left;">Vencimiento</th>
+                <th style="text-align: right;">%</th>
+                <th style="text-align: right;">Monto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ps in doc.payment_schedule %}
+            <tr>
+                <td>{{ ps.description or ps.payment_term }}</td>
+                <td>{{ frappe.format_date(ps.due_date) }}</td>
+                <td style="text-align: right;">{{ ps.invoice_portion | round(2) }}%</td>
+                <td style="text-align: right;">{{ clp(ps.payment_amount) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
       {% if doc.terms %}
       <div class="section-title">Términos</div>
       <div class="muted terms">{{ doc.terms | replace("\n", "<br />") }}</div>

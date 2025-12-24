@@ -134,6 +134,10 @@
   border-collapse: collapse;
 }
 
+.pf table.items thead {
+  display: table-header-group;
+}
+
 .pf table.items thead th {
   font-size: 9px; /* Reduced from 10px */
   text-transform: uppercase;
