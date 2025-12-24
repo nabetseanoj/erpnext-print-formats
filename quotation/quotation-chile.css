@@ -160,7 +160,7 @@
 }
 /* .col-img removed */
 .pf .col-item {
-  width: 250px; /* Increased width since it now holds the image */
+  width: 200px; /* Increased width since it now holds the image */
 }
 .pf .col-desc {
   width: auto;

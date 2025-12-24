@@ -100,10 +100,10 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
           <span class="k">Lista de precios</span
           ><span class="v">{{ doc.selling_price_list or "-" }}</span>
         </div> #}
-        {# <div class="row">
+        <div class="row">
           <span class="k">Pago</span
           ><span class="v">{{ doc.payment_terms_template or "-" }}</span>
-        </div> #}
+        </div>
         {% if doc.delivery_date %}
         <div class="row">
           <span class="k">Entrega</span
