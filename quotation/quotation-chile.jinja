@@ -127,9 +127,8 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
       <thead>
         <tr>
           <th class="col-idx">#</th>
-          <!-- Img column removed/merged -->
-          <th class="col-item">Producto</th>
-          <th class="col-desc">Descripción</th>
+          <th class="col-img">Imagen</th>
+          <th class="col-desc">Detalle</th>
           <th class="col-qty">Cant.</th>
           <th class="col-rate">Precio</th>
           <th class="col-amt">Subtotal</th>
@@ -154,21 +153,20 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
         <tr class="avoid-break">
           <td class="col-idx">{{ loop.index }}</td>
 
-          <td class="col-item">
+          <td class="col-img">
             {% if img_src %}
             <div class="item-image">
                 <img class="pimg" src="{{ img_src }}" alt="img" />
             </div>
             {% endif %}
-            
+          </td>
+
+          <td class="col-desc">
             <div class="strong">{{ it.item_name or it.item_code }}</div>
             {% if it.item_code %}
             <div class="muted">{{ it.item_code }}</div>
             {% endif %}
-          </td>
-
-          <td class="col-desc">
-            <div class="desc">
+            <div class="desc" style="margin-top: 4px;">
               {{ (it.description or "") | replace("\n", "<br />") }}
             </div>
           </td>

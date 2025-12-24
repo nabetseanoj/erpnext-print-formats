@@ -162,9 +162,9 @@
   color: #999;
   font-size: 9px;
 }
-/* .col-img removed */
-.pf .col-item {
-  width: 200px; /* Increased width since it now holds the image */
+.pf .col-img {
+  width: 90px;
+  text-align: center;
 }
 .pf .col-desc {
   width: auto;
