@@ -10,6 +10,8 @@ customer_rut = frappe.db.get_value("Customer", doc.customer, "tax_id") if
 doc.customer else "" %} {# helpers dinero CLP #} {% macro clp(val) -%} {{
 frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
 %}
+{# Fetch Bank Account #}
+{% set bank_acct = frappe.db.get_value("Bank Account", {"company": doc.company, "is_default": 1, "disabled": 0}, "*", as_dict=True) or frappe.db.get_value("Bank Account", {"company": doc.company, "disabled": 0}, "*", as_dict=True) %}
 
 <div class="pf">
   <!-- Header -->
@@ -212,6 +214,19 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
             {% endfor %}
         </tbody>
       </table>
+      {% endif %}
+
+      {% if bank_acct %}
+      <div class="section-title" style="margin-top: 10px;">Datos de Transferencia</div>
+      <div class="muted">
+          <div><strong>Banco:</strong> {{ bank_acct.bank or "-" }}</div>
+          <div><strong>Nombre:</strong> {{ bank_acct.account_name or "-" }}</div>
+          <div><strong>N° Cuenta:</strong> {{ bank_acct.account_no or "-" }}</div>
+          <div><strong>RUT:</strong> {{ company_doc.tax_id }}</div>
+          {% if company_doc.email %}
+          <div><strong>Email:</strong> {{ company_doc.email }}</div>
+          {% endif %}
+      </div>
       {% endif %}
 
       {% if doc.terms %}
