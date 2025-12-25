@@ -239,37 +239,39 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
     </div>
 
     <div class="totals">
-      <div class="section-title">Resumen</div>
+      <div class="totals-content">
+        <div class="section-title">Resumen</div>
 
-      <div class="trow">
-        <span class="k">Neto</span>
-        <span class="v">{{ clp(doc.total) }}</span>
-      </div>
+        <div class="trow">
+          <span class="k">Neto</span>
+          <span class="v">{{ clp(doc.total) }}</span>
+        </div>
 
-      {% if doc.discount_amount and doc.discount_amount != 0 %}
-      <div class="trow">
-        <span class="k">Descuento</span>
-        <span class="v">- {{ clp(doc.discount_amount) }}</span>
-      </div>
-      {% endif %} {# Impuestos (IVA u otros) #} {% if doc.taxes and
-      doc.taxes|length %} {% for tx in doc.taxes %} {% if tx.tax_amount and
-      tx.tax_amount != 0 %}
-      <div class="trow">
-        <span class="k"
-          >{{ tx.description or tx.account_head or "Impuesto" }}</span
-        >
-        <span class="v">{{ clp(tx.tax_amount) }}</span>
-      </div>
-      {% endif %} {% endfor %} {% endif %}
+        {% if doc.discount_amount and doc.discount_amount != 0 %}
+        <div class="trow">
+          <span class="k">Descuento</span>
+          <span class="v">- {{ clp(doc.discount_amount) }}</span>
+        </div>
+        {% endif %} {# Impuestos (IVA u otros) #} {% if doc.taxes and
+        doc.taxes|length %} {% for tx in doc.taxes %} {% if tx.tax_amount and
+        tx.tax_amount != 0 %}
+        <div class="trow">
+          <span class="k"
+            >{{ tx.description or tx.account_head or "Impuesto" }}</span
+          >
+          <span class="v">{{ clp(tx.tax_amount) }}</span>
+        </div>
+        {% endif %} {% endfor %} {% endif %}
 
-      <div class="trow grand">
-        <span class="k">TOTAL</span>
-        <span class="v">{{ clp(doc.grand_total) }}</span>
-      </div>
+        <div class="trow grand">
+          <span class="k">TOTAL</span>
+          <span class="v">{{ clp(doc.grand_total) }}</span>
+        </div>
 
-      {% if doc.in_words %}
-      <div class="in-words muted">{{ doc.in_words }}</div>
-      {% endif %}
+        {% if doc.in_words %}
+        <div class="in-words muted">{{ doc.in_words }}</div>
+        {% endif %}
+      </div>
     </div>
   </div>
 

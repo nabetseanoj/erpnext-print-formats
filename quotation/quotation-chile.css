@@ -229,6 +229,9 @@
   display: table-cell;
   width: 40%;
   vertical-align: top;
+  padding-left: 12px;
+}
+.pf .totals-content {
   border: 1px solid #e8e8e8;
   border-radius: 8px;
   padding: 12px;
