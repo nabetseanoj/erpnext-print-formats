@@ -189,36 +189,85 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
     </table>
   </div>
 
-  <!-- Totals + Taxes -->
-  <div class="totals-wrap">
-    <div class="notes">
-      {% if doc.payment_schedule and doc.payment_schedule|length > 0 %}
-      <div class="section-title" style="margin-top: 10px;">Calendario de Pago</div>
-      <table class="items" style="width: 100%; margin-bottom: 15px;">
-        <thead>
-            <tr>
-                <th style="text-align: left;">Cuota</th>
-                <th style="text-align: left;">Vencimiento</th>
-                <th style="text-align: right;">%</th>
-                <th style="text-align: right;">Monto</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ps in doc.payment_schedule %}
-            <tr>
-                <td>{{ ps.description or ps.payment_term }}</td>
-                <td>{{ frappe.format_date(ps.due_date) }}</td>
-                <td style="text-align: right;">{{ ps.invoice_portion | round(2) }}%</td>
-                <td style="text-align: right;">{{ clp(ps.payment_amount) }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-      {% endif %}
+  <!-- Block 1: Resumen & Calendario de Pago (Side by Side, 2 separate Cards) -->
+  <div class="totals-wrap avoid-break">
+      <!-- Left: Payment Schedule -->
+      <div class="notes">
+          <div class="card" style="margin-bottom: 0; min-height: 100%;">
+            {% if doc.payment_schedule and doc.payment_schedule|length > 0 %}
+            <div class="section-title">Calendario de Pago</div>
+            <table class="items" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Cuota</th>
+                        <th style="text-align: left;">Vencimiento</th>
+                        <th style="text-align: right;">%</th>
+                        <th style="text-align: right;">Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ps in doc.payment_schedule %}
+                    <tr>
+                        <td>{{ ps.description or ps.payment_term }}</td>
+                        <td>{{ frappe.format_date(ps.due_date) }}</td>
+                        <td style="text-align: right;">{{ ps.invoice_portion | round(2) }}%</td>
+                        <td style="text-align: right;">{{ clp(ps.payment_amount) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+               <div class="muted">Sin calendario de pago definido.</div>
+            {% endif %}
+          </div>
+      </div>
 
+      <!-- Right: Resumen -->
+      <div class="totals">
+        <div class="totals-content">
+            <div class="section-title">Resumen</div>
+
+            <div class="trow">
+              <span class="k">Neto</span>
+              <span class="v">{{ clp(doc.total) }}</span>
+            </div>
+
+            {% if doc.discount_amount and doc.discount_amount != 0 %}
+            <div class="trow">
+              <span class="k">Descuento</span>
+              <span class="v">- {{ clp(doc.discount_amount) }}</span>
+            </div>
+            {% endif %} 
+            
+            {# Impuestos (IVA u otros) #} 
+            {% if doc.taxes and doc.taxes|length %} 
+                {% for tx in doc.taxes %} 
+                    {% if tx.tax_amount and tx.tax_amount != 0 %}
+                    <div class="trow">
+                      <span class="k">{{ tx.description or tx.account_head or "Impuesto" }}</span>
+                      <span class="v">{{ clp(tx.tax_amount) }}</span>
+                    </div>
+                    {% endif %} 
+                {% endfor %} 
+            {% endif %}
+
+            <div class="trow grand">
+              <span class="k">TOTAL</span>
+              <span class="v">{{ clp(doc.grand_total) }}</span>
+            </div>
+
+            {% if doc.in_words %}
+            <div class="in-words muted">{{ doc.in_words }}</div>
+            {% endif %}
+        </div>
+      </div>
+  </div>
+
+  <!-- Block 2: Transfer Details & Terms -->
+  <div class="card avoid-break">
       {% if bank_acct %}
-      <div class="section-title" style="margin-top: 10px;">Datos de Transferencia</div>
-      <div class="muted">
+      <div class="section-title">Datos de Transferencia</div>
+      <div class="muted" style="margin-bottom: 15px;">
           <div><strong>Banco:</strong> {{ bank_acct.bank or "-" }}</div>
           <div><strong>Nombre:</strong> {{ bank_acct.account_name or "-" }}</div>
           <div><strong>N° Cuenta:</strong> {{ bank_acct.account_no or "-" }}</div>
@@ -230,49 +279,14 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
       {% endif %}
 
       {% if doc.terms %}
-      <div class="section-title">Términos</div>
-      <div class="muted terms">{{ doc.terms | replace("\n", "<br />") }}</div>
-      {% endif %} {% if doc.note %}
-      <div class="section-title">Nota</div>
+      <div class="section-title" style="{% if bank_acct %}margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;{% endif %}">Términos</div>
+      <div class="muted terms" style="border-left: none; padding-left: 0;">{{ doc.terms | replace("\n", "<br />") }}</div>
+      {% endif %}
+
+      {% if doc.note %}
+      <div class="section-title" style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">Nota</div>
       <div class="muted">{{ doc.note | replace("\n", "<br />") }}</div>
       {% endif %}
-    </div>
-
-    <div class="totals">
-      <div class="totals-content">
-        <div class="section-title">Resumen</div>
-
-        <div class="trow">
-          <span class="k">Neto</span>
-          <span class="v">{{ clp(doc.total) }}</span>
-        </div>
-
-        {% if doc.discount_amount and doc.discount_amount != 0 %}
-        <div class="trow">
-          <span class="k">Descuento</span>
-          <span class="v">- {{ clp(doc.discount_amount) }}</span>
-        </div>
-        {% endif %} {# Impuestos (IVA u otros) #} {% if doc.taxes and
-        doc.taxes|length %} {% for tx in doc.taxes %} {% if tx.tax_amount and
-        tx.tax_amount != 0 %}
-        <div class="trow">
-          <span class="k"
-            >{{ tx.description or tx.account_head or "Impuesto" }}</span
-          >
-          <span class="v">{{ clp(tx.tax_amount) }}</span>
-        </div>
-        {% endif %} {% endfor %} {% endif %}
-
-        <div class="trow grand">
-          <span class="k">TOTAL</span>
-          <span class="v">{{ clp(doc.grand_total) }}</span>
-        </div>
-
-        {% if doc.in_words %}
-        <div class="in-words muted">{{ doc.in_words }}</div>
-        {% endif %}
-      </div>
-    </div>
   </div>
 
   <!-- Footer -->

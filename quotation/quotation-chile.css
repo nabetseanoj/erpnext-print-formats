@@ -212,13 +212,14 @@
 .pf .totals-wrap {
   display: table;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 0;
+  margin-bottom: 12px;
 }
 .pf .notes {
   display: table-cell;
   width: 60%;
   vertical-align: top;
-  padding-right: 12px;
+  padding-right: 6px;
 }
 .pf .terms {
   border-left: 3px solid #eee;
@@ -229,7 +230,7 @@
   display: table-cell;
   width: 40%;
   vertical-align: top;
-  padding-left: 12px;
+  padding-left: 6px;
 }
 .pf .totals-content {
   border: 1px solid #e8e8e8;
