@@ -58,7 +58,7 @@
 /* Ensure image inside header behaves */
 .pf .hr-logo img {
   display: block;
-  max-width: 250px;
+  max-width: 300px;
 }
 
 .pf .company {
@@ -75,7 +75,6 @@
   display: table-cell;
   vertical-align: middle; /* Align vertically with text */
   width: 80px; /* Fixed width to ensure space for logo */
-  padding-left: 20px;
 }
 .pf .hr-details {
   display: table-cell;
