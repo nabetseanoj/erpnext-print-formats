@@ -71,6 +71,15 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
     </div>
   </div>
 
+{# Fetch Customer Phone #}
+{% set contact_phone = "" %}
+{% if doc.contact_person %}
+    {% set contact_phone = frappe.db.get_value("Contact", doc.contact_person, "mobile_no") or frappe.db.get_value("Contact", doc.contact_person, "phone") %}
+{% endif %}
+
+{# Fetch Salesperson Details #}
+{% set salesperson = frappe.get_doc("User", doc.owner) %}
+
   <!-- Parties (Two Cards) -->
   <div class="grid2" style="margin-bottom: 12px;">
     <div>
@@ -87,7 +96,11 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
         <div class="muted">
           Contacto: {{ doc.contact_display or doc.contact_person }}
         </div>
-        {% endif %} {% if doc.contact_email %}
+        {% endif %}
+        {% if contact_phone %}
+        <div class="muted">{{ contact_phone }}</div>
+        {% endif %}
+        {% if doc.contact_email %}
         <div class="muted">{{ doc.contact_email }}</div>
         {% endif %}
       </div>
@@ -98,14 +111,14 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
         <div class="pf-label">Condiciones comerciales</div>
         <div class="pf-row">
           <span class="k">Vendedor</span
-          ><span class="v">{{ frappe.db.get_value("User", doc.owner, "full_name") or doc.owner }}</span>
+          ><span class="v">{{ salesperson.full_name or doc.owner }}</span>
         </div>
-        {# <div class="pf-row">
+        <div class="pf-row">
           <span class="k">Lista de precios</span
           ><span class="v">{{ doc.selling_price_list or "-" }}</span>
-        </div> #}
+        </div>
         <div class="pf-row">
-          <span class="k">Pago</span
+          <span class="k">Términos de pago</span
           ><span class="v">{{ doc.payment_terms_template or "-" }}</span>
         </div>
         {% if doc.delivery_date %}
