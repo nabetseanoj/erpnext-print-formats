@@ -75,7 +75,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
   <div class="grid2" style="margin-bottom: 12px;">
     <div>
       <div class="card" style="margin-bottom: 0; min-height: 100%;">
-        <div class="label">Cliente</div>
+        <div class="pf-label">Cliente</div>
         <div class="strong">{{ doc.customer_name or "-" }}</div>
         {% if customer_rut %}
         <div class="muted"><span class="k2">RUT</span> {{ customer_rut }}</div>
@@ -95,7 +95,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
 
     <div>
       <div class="card" style="margin-bottom: 0; min-height: 100%;">
-        <div class="label">Condiciones comerciales</div>
+        <div class="pf-label">Condiciones comerciales</div>
         <div class="pf-row">
           <span class="k">Vendedor</span
           ><span class="v">{{ frappe.db.get_value("User", doc.owner, "full_name") or doc.owner }}</span>
