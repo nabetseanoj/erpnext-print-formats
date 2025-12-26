@@ -289,6 +289,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
       <div class="muted" style="margin-bottom: 15px;">
           <div><strong>Banco:</strong> {{ bank_acct.bank or "-" }}</div>
           <div><strong>Nombre:</strong> {{ bank_acct.account_name or "-" }}</div>
+          <div><strong>Tipo:</strong> {{ bank_acct.account_type or "-" }}</div>
           <div><strong>N° Cuenta:</strong> {{ bank_acct.bank_account_no or "-" }}</div>
           <div><strong>RUT:</strong> {{ company_doc.tax_id }}</div>
           {% if company_doc.email %}
