@@ -301,3 +301,17 @@
 .avoid-break {
   page-break-inside: avoid;
 }
+
+.pf .draft-header {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 8px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 4px;
+}

@@ -14,6 +14,10 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
 {% set bank_acct = frappe.db.get_value("Bank Account", {"company": doc.company, "is_default": 1, "disabled": 0}, "*", as_dict=True) or frappe.db.get_value("Bank Account", {"company": doc.company, "disabled": 0}, "*", as_dict=True) %}
 
 <div class="pf">
+  {% if doc.docstatus == 0 %}
+  <div class="draft-header">BORRADOR</div>
+  {% endif %}
+
   <!-- Header -->
   <div class="header">
     <div class="h-left">
@@ -285,7 +289,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
       <div class="muted" style="margin-bottom: 15px;">
           <div><strong>Banco:</strong> {{ bank_acct.bank or "-" }}</div>
           <div><strong>Nombre:</strong> {{ bank_acct.account_name or "-" }}</div>
-          <div><strong>N° Cuenta:</strong> {{ bank_acct.account_no or "-" }}</div>
+          <div><strong>N° Cuenta:</strong> {{ bank_acct.bank_account_no or "-" }}</div>
           <div><strong>RUT:</strong> {{ company_doc.tax_id }}</div>
           {% if company_doc.email %}
           <div><strong>Email:</strong> {{ company_doc.email }}</div>
