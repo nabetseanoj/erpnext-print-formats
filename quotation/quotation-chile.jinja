@@ -69,7 +69,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
           {% endif %}
         </div>
         <div class="hr-logo">
-          <img src="https://domosdelsur.cl/logo-black.svg" />
+          <img src="{{ frappe.utils.get_url(frappe.get_value('Company', doc.company, 'logo')) }}" />
         </div>
       </div>
     </div>
@@ -124,6 +124,10 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
         <div class="pf-row">
           <span class="k">Términos de pago</span
           ><span class="v">{{ doc.payment_terms_template or "-" }}</span>
+        </div>
+        <div class="pf-row">
+          <span class="k">Términos generales</span
+          ><span class="v">{{ doc.tc_name or "-" }}</span>
         </div>
         {% if doc.delivery_date %}
         <div class="pf-row">
