@@ -299,7 +299,13 @@
   page-break-after: always;
 }
 .avoid-break {
-  page-break-inside: avoid;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+
+.print-format table.items tr {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
 }
 
 .print-format .draft-header {
