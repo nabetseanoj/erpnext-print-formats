@@ -2,6 +2,9 @@
   PRINT FORMAT: Ficha Técnica de Producto (Chile)
 ============================ #}
 
+{% set company_name = doc.default_company or frappe.db.get_single_value("Global Defaults", "default_company") %}
+{% set company_doc = frappe.get_doc("Company", company_name) if company_name else None %}
+
 <div class="pf">
 
     {# --- HEADER --- #}
@@ -12,15 +15,8 @@
             <div class="subtitle">{{ doc.item_code }}</div>
         </div>
         <div class="h-right">
-            {# Standard ERPNext Company Logo retrieval #}
-            {% if doc.default_company %}
-                 {% set company_logo = frappe.db.get_value("Company", doc.default_company, "logo") %}
-                 {% if company_logo %}
-                    <img src="{{ company_logo }}" class="logo-img" alt="Logo" />
-                 {% endif %}
-            {% else %}
-                 {# Fallback if no default company on item, try to find a global default or just skip #}
-                 {# Assuming user context often provides a company, but for direct item print, we might just use a placeholder or skip #}
+            {% if company_doc and company_doc.logo %}
+                <img src="{{ frappe.utils.get_url(company_doc.logo) }}" class="logo-img" alt="{{ company_name }}" />
             {% endif %}
         </div>
     </div>
@@ -39,7 +35,7 @@
         <div class="hero-desc-col">
             <div class="card description-box">
                 <div class="section-title">Descripción</div>
-                <div>
+                <div style="line-height: 1.6;">
                    {{ doc.description or doc.item_name }}
                 </div>
             </div>
@@ -195,7 +191,22 @@
 
     {# --- FOOTER --- #}
     <div class="footer">
-         {{ doc.item_name }} ({{ doc.item_code }}) • Ficha Técnica Generada el {{ frappe.utils.nowdate() }}
+         <div class="company-info">
+            <div class="company-name">{{ company_doc.name }}</div>
+            {% if company_doc.tax_id %}
+            <div class="company-detail"><span class="label">RUT:</span> {{ company_doc.tax_id }}</div>
+            {% endif %}
+            
+            {% if company_doc.address %}
+             <div class="company-detail">{{ company_doc.address | replace("\n", ", ") }}</div>
+            {% endif %}
+
+            <div class="company-contact">
+                {% if company_doc.phone_no %}<span class="item">Tel: {{ company_doc.phone_no }}</span>{% endif %}
+                {% if company_doc.email %}<span class="item">Email: {{ company_doc.email }}</span>{% endif %}
+                {% if company_doc.website %}<span class="item">{{ company_doc.website }}</span>{% endif %}
+            </div>
+         </div>
     </div>
 
 </div>

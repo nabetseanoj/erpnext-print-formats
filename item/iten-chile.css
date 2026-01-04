@@ -34,7 +34,7 @@
   display: table;
   width: 100%;
   margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 3px solid #eee;
   padding-bottom: 15px;
 }
 .pf .h-left {
@@ -70,8 +70,9 @@
 }
 
 .pf .logo-img {
-  max-width: 120px;
+  max-width: 150px;
   max-height: 60px;
+  object-fit: contain;
 }
 
 /* Hero Section: Image + Description */
@@ -119,8 +120,8 @@
   display: table;
   width: 100%;
   border-collapse: separate;
-  border-spacing: 10px; /* Gap akin to grid-gap */
-  margin: 0 -10px; /* Offset spacing */
+  border-spacing: 10px;
+  margin: 0 -10px;
   width: calc(100% + 20px);
 }
 
@@ -136,7 +137,7 @@
   padding: 15px;
   margin-bottom: 10px;
   background: #fff;
-  height: 100%; /* Try to fill height if possible */
+  height: 100%;
 }
 
 /* Spec Rows */
@@ -163,11 +164,43 @@
   color: #000;
 }
 
+/* Footer Styles */
 .pf .footer {
-  margin-top: 30px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
-  color: #999;
-  font-size: 10px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 3px solid #eee;
   text-align: center;
+}
+
+.pf .company-info {
+  margin-bottom: 10px;
+}
+.pf .company-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.pf .company-detail {
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 2px;
+}
+.pf .company-contact {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #444;
+}
+.pf .company-contact .item {
+  display: inline-block;
+  margin: 0 8px;
+  font-weight: 500;
+}
+.pf .company-contact .item:first-child {
+  margin-left: 0;
+}
+.pf .company-contact .item:last-child {
+  margin-right: 0;
 }
