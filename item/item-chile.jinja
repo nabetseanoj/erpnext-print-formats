@@ -1,0 +1,201 @@
+{# ============================ 
+  PRINT FORMAT: Ficha Técnica de Producto (Chile)
+============================ #}
+
+<div class="pf">
+
+    {# --- HEADER --- #}
+    <div class="header">
+        <div class="h-left">
+            <div class="doc-type">Ficha Técnica</div>
+            <div class="title">{{ doc.item_name }}</div>
+            <div class="subtitle">{{ doc.item_code }}</div>
+        </div>
+        <div class="h-right">
+            {# Standard ERPNext Company Logo retrieval #}
+            {% if doc.default_company %}
+                 {% set company_logo = frappe.db.get_value("Company", doc.default_company, "logo") %}
+                 {% if company_logo %}
+                    <img src="{{ company_logo }}" class="logo-img" alt="Logo" />
+                 {% endif %}
+            {% else %}
+                 {# Fallback if no default company on item, try to find a global default or just skip #}
+                 {# Assuming user context often provides a company, but for direct item print, we might just use a placeholder or skip #}
+            {% endif %}
+        </div>
+    </div>
+
+    {# --- HERO SECTION: IMAGE & DESCRIPTION --- #}
+    <div class="hero">
+        <div class="hero-img-col">
+            {% if doc.image %}
+            <img src="{{ doc.image }}" class="main-product-image" />
+            {% else %}
+            <div class="main-product-image" style="height: 200px; display: flex; align-items: center; justify-content: center; background: #f0f0f0; color: #ccc;">
+                Sin Imagen
+            </div>
+            {% endif %}
+        </div>
+        <div class="hero-desc-col">
+            <div class="card description-box">
+                <div class="section-title">Descripción</div>
+                <div>
+                   {{ doc.description or doc.item_name }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# --- SPECS SECTION --- #}
+    <div class="specs-container">
+        
+        {# -- ROW 1: DIMENSIONS & STRUCTURE -- #}
+        <div class="specs-grid">
+            <div class="spec-col">
+                <div class="card">
+                    <div class="section-title">Dimensiones</div>
+                    {% if doc.custom_diameter %}
+                    <div class="spec-row">
+                        <span class="spec-label">Diámetro</span>
+                        <span class="spec-value">{{ doc.custom_diameter }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_height %}
+                    <div class="spec-row">
+                        <span class="spec-label">Altura</span>
+                        <span class="spec-value">{{ doc.custom_height }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_area %}
+                    <div class="spec-row">
+                        <span class="spec-label">Área</span>
+                        <span class="spec-value">{{ doc.custom_area }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_perimeter %}
+                    <div class="spec-row">
+                        <span class="spec-label">Perímetro</span>
+                        <span class="spec-value">{{ doc.custom_perimeter }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="spec-col">
+                <div class="card">
+                    <div class="section-title">Estructura</div>
+                    {% if doc.custom_structure_material %}
+                    <div class="spec-row">
+                        <span class="spec-label">Material</span>
+                        <span class="spec-value">{{ doc.custom_structure_material }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_structure_warranty %}
+                    <div class="spec-row">
+                        <span class="spec-label">Garantía</span>
+                        <span class="spec-value">{{ doc.custom_structure_warranty }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_structure_life_span %}
+                    <div class="spec-row">
+                        <span class="spec-label">Vida Útil</span>
+                        <span class="spec-value">{{ doc.custom_structure_life_span }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_structure_min_operation_temp or doc.custom_structure_max_operation_temp %}
+                    <div class="spec-row">
+                        <span class="spec-label">Temp. Operación</span>
+                        <span class="spec-value">
+                            {{ doc.custom_structure_min_operation_temp or "?" }} / {{ doc.custom_structure_max_operation_temp or "?" }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# -- ROW 2: COVER & PERFORMANCE -- #}
+        <div class="specs-grid" style="margin-top: 0;">
+            <div class="spec-col">
+                <div class="card">
+                    <div class="section-title">Cubierta</div>
+                    {% if doc.custom_opaque_cover_material %}
+                    <div class="spec-row">
+                        <span class="spec-label">Material Opaco</span>
+                        <span class="spec-value">{{ doc.custom_opaque_cover_material }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_transparent_cover_material %}
+                    <div class="spec-row">
+                        <span class="spec-label">Material Transparente</span>
+                        <span class="spec-value">{{ doc.custom_transparent_cover_material }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_cover_warranty %}
+                    <div class="spec-row">
+                        <span class="spec-label">Garantía</span>
+                        <span class="spec-value">{{ doc.custom_cover_warranty }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_cover_life_span %}
+                    <div class="spec-row">
+                        <span class="spec-label">Vida Útil</span>
+                        <span class="spec-value">{{ doc.custom_cover_life_span }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_cover_min_operation_temp or doc.custom_cover_max_operation_temp %}
+                    <div class="spec-row">
+                        <span class="spec-label">Temp. Operación</span>
+                        <span class="spec-value">
+                             {{ doc.custom_cover_min_operation_temp or "?" }} / {{ doc.custom_cover_max_operation_temp or "?" }}
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_insulation_material %}
+                    <div class="spec-row">
+                        <span class="spec-label">Aislación</span>
+                        <span class="spec-value">{{ doc.custom_insulation_material }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="spec-col">
+                <div class="card">
+                    <div class="section-title">Resistencia e Instalación</div>
+                    {% if doc.custom_wind_resistance %}
+                    <div class="spec-row">
+                        <span class="spec-label">Resistencia Viento</span>
+                        <span class="spec-value">{{ doc.custom_wind_resistance }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_snow_resistance %}
+                    <div class="spec-row">
+                        <span class="spec-label">Resistencia Nieve</span>
+                        <span class="spec-value">{{ doc.custom_snow_resistance }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_impermeability %}
+                    <div class="spec-row">
+                        <span class="spec-label">Impermeabilidad</span>
+                        <span class="spec-value">{{ doc.custom_impermeability }}</span>
+                    </div>
+                    {% endif %}
+                    {% if doc.custom_installation_days %}
+                    <div class="spec-row">
+                        <span class="spec-label">Tiempo Instalación</span>
+                        <span class="spec-value">{{ doc.custom_installation_days }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {# --- FOOTER --- #}
+    <div class="footer">
+         {{ doc.item_name }} ({{ doc.item_code }}) • Ficha Técnica Generada el {{ frappe.utils.nowdate() }}
+    </div>
+
+</div>

@@ -1,0 +1,173 @@
+/* ============================
+  PRINT FORMAT: Ficha Técnica de Producto (Chile)
+  - Basado en quotation-chile.css
+  - Enfoque en imagen grande y especificaciones técnicas
+============================ */
+
+.pf {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  font-size: 11px;
+  color: #111;
+  line-height: 1.4;
+}
+
+.pf .muted {
+  color: #666;
+}
+.pf .strong {
+  font-weight: 700;
+}
+
+.pf .section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #444;
+  margin: 0 0 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #eee;
+}
+
+.pf .header {
+  display: table;
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+.pf .h-left {
+  display: table-cell;
+  vertical-align: middle;
+  width: 70%;
+}
+.pf .h-right {
+  display: table-cell;
+  vertical-align: middle;
+  width: 30%;
+  text-align: right;
+}
+
+.pf .doc-type {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+  margin-bottom: 4px;
+}
+.pf .title {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0;
+  color: #000;
+  line-height: 1.1;
+}
+.pf .subtitle {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.pf .logo-img {
+  max-width: 120px;
+  max-height: 60px;
+}
+
+/* Hero Section: Image + Description */
+.pf .hero {
+  display: table;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.pf .hero-img-col {
+  display: table-cell;
+  width: 45%;
+  vertical-align: top;
+  padding-right: 20px;
+}
+.pf .hero-desc-col {
+  display: table-cell;
+  width: 55%;
+  vertical-align: top;
+}
+
+.pf .main-product-image {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  padding: 5px;
+  background: #fff;
+  object-fit: contain;
+}
+
+.pf .description-box {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 8px;
+  color: #333;
+  font-size: 12px;
+  text-align: justify;
+}
+
+/* Specs Grid */
+.pf .specs-container {
+  margin-top: 20px;
+}
+
+.pf .specs-grid {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 10px; /* Gap akin to grid-gap */
+  margin: 0 -10px; /* Offset spacing */
+  width: calc(100% + 20px);
+}
+
+.pf .spec-col {
+  display: table-cell;
+  width: 50%;
+  vertical-align: top;
+}
+
+.pf .card {
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #fff;
+  height: 100%; /* Try to fill height if possible */
+}
+
+/* Spec Rows */
+.pf .spec-row {
+  display: table;
+  width: 100%;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.pf .spec-row:last-child {
+  border-bottom: none;
+}
+.pf .spec-label {
+  display: table-cell;
+  color: #666;
+  font-weight: 500;
+  width: 50%;
+}
+.pf .spec-value {
+  display: table-cell;
+  font-weight: 700;
+  text-align: right;
+  width: 50%;
+  color: #000;
+}
+
+.pf .footer {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  color: #999;
+  font-size: 10px;
+  text-align: center;
+}
