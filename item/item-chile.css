@@ -211,3 +211,7 @@
 .pf .company-contact .item:last-child {
   margin-right: 0;
 }
+
+.pf .label {
+  border: none;
+}
