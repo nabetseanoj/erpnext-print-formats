@@ -153,14 +153,22 @@
   color: #666;
   font-weight: 500;
   width: 30%;
-  font-size: 11px;
+  font-size: 12px;
 }
 .pf .spec-table .spec-value {
   font-weight: 500;
   text-align: left;
   width: 70%;
   color: #000;
-  font-size: 11px;
+  font-size: 12px;
+}
+
+/* Specific 50/50 split for top grid cards */
+.pf .specs-grid .spec-table .spec-label {
+  width: 50%;
+}
+.pf .specs-grid .spec-table .spec-value {
+  width: 50%;
 }
 
 /* Footer Styles */
