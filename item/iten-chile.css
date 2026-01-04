@@ -49,6 +49,12 @@
   text-align: right;
 }
 
+.pf .hr-logo {
+  display: table-cell;
+  vertical-align: middle; /* Align vertically with text */
+  width: 80px; /* Fixed width to ensure space for logo */
+}
+
 .pf .doc-type {
   font-size: 10px;
   text-transform: uppercase;
@@ -144,7 +150,7 @@
 .pf .spec-row {
   display: table;
   width: 100%;
-  padding: 6px 0;
+  padding: 3px 0;
   border-bottom: 1px solid #f0f0f0;
 }
 .pf .spec-row:last-child {

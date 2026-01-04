@@ -192,20 +192,22 @@
     {# --- FOOTER --- #}
     <div class="footer">
          <div class="company-info">
-            <div class="company-name">{{ company_doc.name }}</div>
-            {% if company_doc.tax_id %}
-            <div class="company-detail"><span class="label">RUT:</span> {{ company_doc.tax_id }}</div>
-            {% endif %}
-            
-            {% if company_doc.address %}
-             <div class="company-detail">{{ company_doc.address | replace("\n", ", ") }}</div>
-            {% endif %}
+            {% if company_doc %}
+                <div class="company-name">{{ company_doc.name }}</div>
+                {% if company_doc.tax_id %}
+                <div class="company-detail"><span class="label">RUT:</span> {{ company_doc.tax_id }}</div>
+                {% endif %}
+                
+                {% if company_doc.address %}
+                 <div class="company-detail">{{ company_doc.address | replace("\n", ", ") }}</div>
+                {% endif %}
 
-            <div class="company-contact">
-                {% if company_doc.phone_no %}<span class="item">Tel: {{ company_doc.phone_no }}</span>{% endif %}
-                {% if company_doc.email %}<span class="item">Email: {{ company_doc.email }}</span>{% endif %}
-                {% if company_doc.website %}<span class="item">{{ company_doc.website }}</span>{% endif %}
-            </div>
+                <div class="company-contact">
+                    {% if company_doc.phone_no %}<span class="item">Tel: {{ company_doc.phone_no }}</span>{% endif %}
+                    {% if company_doc.email %}<span class="item">Email: {{ company_doc.email }}</span>{% endif %}
+                    {% if company_doc.website %}<span class="item">{{ company_doc.website }}</span>{% endif %}
+                </div>
+            {% endif %}
          </div>
     </div>
 
