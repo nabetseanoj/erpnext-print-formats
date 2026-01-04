@@ -55,146 +55,158 @@
     {# --- SPECS SECTION --- #}
     <div class="specs-container">
         
-        {# -- ROW 1: DIMENSIONS & STRUCTURE -- #}
         <div class="specs-grid">
+            {# -- COL 1: DIMENSIONS -- #}
             <div class="spec-col">
                 <div class="card">
                     <div class="section-title">Dimensiones</div>
-                    {% if doc.custom_diameter %}
-                    <div class="spec-row">
-                        <span class="spec-label">Diámetro</span>
-                        <span class="spec-value">{{ doc.custom_diameter }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_height %}
-                    <div class="spec-row">
-                        <span class="spec-label">Altura</span>
-                        <span class="spec-value">{{ doc.custom_height }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_area %}
-                    <div class="spec-row">
-                        <span class="spec-label">Área</span>
-                        <span class="spec-value">{{ doc.custom_area }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_perimeter %}
-                    <div class="spec-row">
-                        <span class="spec-label">Perímetro</span>
-                        <span class="spec-value">{{ doc.custom_perimeter }}</span>
-                    </div>
-                    {% endif %}
+                    <table class="spec-table">
+                        <tbody>
+                            {% if doc.custom_diameter %}
+                            <tr>
+                                <td class="spec-label">Diámetro</td>
+                                <td class="spec-value">{{ doc.custom_diameter }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if doc.custom_height %}
+                            <tr>
+                                <td class="spec-label">Altura</td>
+                                <td class="spec-value">{{ doc.custom_height }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if doc.custom_area %}
+                            <tr>
+                                <td class="spec-label">Área</td>
+                                <td class="spec-value">{{ doc.custom_area }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if doc.custom_perimeter %}
+                            <tr>
+                                <td class="spec-label">Perímetro</td>
+                                <td class="spec-value">{{ doc.custom_perimeter }}</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            
+
+            {# -- COL 2: RESISTANCE & INSTALLATION -- #}
             <div class="spec-col">
                 <div class="card">
-                    <div class="section-title">Estructura</div>
-                    {% if doc.custom_structure_material %}
-                    <div class="spec-row">
-                        <span class="spec-label">Material</span>
-                        <span class="spec-value">{{ doc.custom_structure_material }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_structure_warranty %}
-                    <div class="spec-row">
-                        <span class="spec-label">Garantía</span>
-                        <span class="spec-value">{{ doc.custom_structure_warranty }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_structure_life_span %}
-                    <div class="spec-row">
-                        <span class="spec-label">Vida Útil</span>
-                        <span class="spec-value">{{ doc.custom_structure_life_span }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_structure_min_operation_temp or doc.custom_structure_max_operation_temp %}
-                    <div class="spec-row">
-                        <span class="spec-label">Temp. Operación</span>
-                        <span class="spec-value">
-                            {{ doc.custom_structure_min_operation_temp or "?" }} / {{ doc.custom_structure_max_operation_temp or "?" }}
-                        </span>
-                    </div>
-                    {% endif %}
+                    <div class="section-title">Resistencia e Instalación</div>
+                    <table class="spec-table">
+                        <tbody>
+                            {% if doc.custom_wind_resistance %}
+                            <tr>
+                                <td class="spec-label">Resistencia Viento</td>
+                                <td class="spec-value">{{ doc.custom_wind_resistance }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if doc.custom_snow_resistance %}
+                            <tr>
+                                <td class="spec-label">Resistencia Nieve</td>
+                                <td class="spec-value">{{ doc.custom_snow_resistance }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if doc.custom_impermeability %}
+                            <tr>
+                                <td class="spec-label">Impermeabilidad</td>
+                                <td class="spec-value">{{ doc.custom_impermeability }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if doc.custom_installation_days %}
+                            <tr>
+                                <td class="spec-label">Tiempo Instalación</td>
+                                <td class="spec-value">{{ doc.custom_installation_days }}</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        {# -- ROW 2: COVER & PERFORMANCE -- #}
-        <div class="specs-grid" style="margin-top: 0;">
-            <div class="spec-col">
-                <div class="card">
-                    <div class="section-title">Cubierta</div>
+        {# -- STRUCTURE -- #}
+        <div class="card">
+            <div class="section-title">Estructura</div>
+            <table class="spec-table">
+                <tbody>
+                    {% if doc.custom_structure_material %}
+                    <tr>
+                        <td class="spec-label">Material</td>
+                        <td class="spec-value">{{ doc.custom_structure_material }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if doc.custom_structure_warranty %}
+                    <tr>
+                        <td class="spec-label">Garantía</td>
+                        <td class="spec-value">{{ doc.custom_structure_warranty }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if doc.custom_structure_life_span %}
+                    <tr>
+                        <td class="spec-label">Vida Útil</td>
+                        <td class="spec-value">{{ doc.custom_structure_life_span }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if doc.custom_structure_min_operation_temp or doc.custom_structure_max_operation_temp %}
+                    <tr>
+                        <td class="spec-label">Temp. Operación</td>
+                        <td class="spec-value">
+                            {{ doc.custom_structure_min_operation_temp or "?" }} / {{ doc.custom_structure_max_operation_temp or "?" }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        {# -- COVER -- #}
+        <div class="card">
+            <div class="section-title">Cubierta</div>
+            <table class="spec-table">
+                <tbody>
                     {% if doc.custom_opaque_cover_material %}
-                    <div class="spec-row">
-                        <span class="spec-label">Material Opaco</span>
-                        <span class="spec-value">{{ doc.custom_opaque_cover_material }}</span>
-                    </div>
+                    <tr>
+                        <td class="spec-label">Material Opaco</td>
+                        <td class="spec-value">{{ doc.custom_opaque_cover_material }}</td>
+                    </tr>
                     {% endif %}
                     {% if doc.custom_transparent_cover_material %}
-                    <div class="spec-row">
-                        <span class="spec-label">Material Transparente</span>
-                        <span class="spec-value">{{ doc.custom_transparent_cover_material }}</span>
-                    </div>
+                    <tr>
+                        <td class="spec-label">Material Transparente</td>
+                        <td class="spec-value">{{ doc.custom_transparent_cover_material }}</td>
+                    </tr>
                     {% endif %}
                     {% if doc.custom_cover_warranty %}
-                    <div class="spec-row">
-                        <span class="spec-label">Garantía</span>
-                        <span class="spec-value">{{ doc.custom_cover_warranty }}</span>
-                    </div>
+                    <tr>
+                        <td class="spec-label">Garantía</td>
+                        <td class="spec-value">{{ doc.custom_cover_warranty }}</td>
+                    </tr>
                     {% endif %}
                     {% if doc.custom_cover_life_span %}
-                    <div class="spec-row">
-                        <span class="spec-label">Vida Útil</span>
-                        <span class="spec-value">{{ doc.custom_cover_life_span }}</span>
-                    </div>
+                    <tr>
+                        <td class="spec-label">Vida Útil</td>
+                        <td class="spec-value">{{ doc.custom_cover_life_span }}</td>
+                    </tr>
                     {% endif %}
                     {% if doc.custom_cover_min_operation_temp or doc.custom_cover_max_operation_temp %}
-                    <div class="spec-row">
-                        <span class="spec-label">Temp. Operación</span>
-                        <span class="spec-value">
+                    <tr>
+                        <td class="spec-label">Temp. Operación</td>
+                        <td class="spec-value">
                              {{ doc.custom_cover_min_operation_temp or "?" }} / {{ doc.custom_cover_max_operation_temp or "?" }}
-                        </span>
-                    </div>
+                        </td>
+                    </tr>
                     {% endif %}
                     {% if doc.custom_insulation_material %}
-                    <div class="spec-row">
-                        <span class="spec-label">Aislación</span>
-                        <span class="spec-value">{{ doc.custom_insulation_material }}</span>
-                    </div>
+                    <tr>
+                        <td class="spec-label">Aislación</td>
+                        <td class="spec-value">{{ doc.custom_insulation_material }}</td>
+                    </tr>
                     {% endif %}
-                </div>
-            </div>
-
-            <div class="spec-col">
-                <div class="card">
-                    <div class="section-title">Resistencia e Instalación</div>
-                    {% if doc.custom_wind_resistance %}
-                    <div class="spec-row">
-                        <span class="spec-label">Resistencia Viento</span>
-                        <span class="spec-value">{{ doc.custom_wind_resistance }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_snow_resistance %}
-                    <div class="spec-row">
-                        <span class="spec-label">Resistencia Nieve</span>
-                        <span class="spec-value">{{ doc.custom_snow_resistance }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_impermeability %}
-                    <div class="spec-row">
-                        <span class="spec-label">Impermeabilidad</span>
-                        <span class="spec-value">{{ doc.custom_impermeability }}</span>
-                    </div>
-                    {% endif %}
-                    {% if doc.custom_installation_days %}
-                    <div class="spec-row">
-                        <span class="spec-label">Tiempo Instalación</span>
-                        <span class="spec-value">{{ doc.custom_installation_days }}</span>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
 
     </div>

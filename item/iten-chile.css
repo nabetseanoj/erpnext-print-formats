@@ -26,8 +26,6 @@
   text-transform: uppercase;
   color: #444;
   margin: 0 0 10px 0;
-  padding-bottom: 5px;
-  border-bottom: 2px solid #eee;
 }
 
 .pf .header {
@@ -83,13 +81,13 @@
 }
 .pf .hero-img-col {
   display: table-cell;
-  width: 45%;
+  width: 50%;
   vertical-align: top;
   padding-right: 20px;
 }
 .pf .hero-desc-col {
   display: table-cell;
-  width: 55%;
+  width: 50%;
   vertical-align: top;
 }
 
@@ -140,28 +138,34 @@
   height: 100%;
 }
 
-/* Spec Rows */
-.pf .spec-row {
-  display: table;
+/* Spec Tables */
+.pf .spec-table {
   width: 100%;
+  border-collapse: collapse;
+}
+
+.pf .spec-table td {
   padding: 3px 0;
   border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
 }
-.pf .spec-row:last-child {
+
+.pf .spec-table tr:last-child td {
   border-bottom: none;
 }
-.pf .spec-label {
-  display: table-cell;
+
+.pf .spec-table .spec-label {
   color: #666;
   font-weight: 500;
-  width: 50%;
+  width: 30%;
+  font-size: 11px;
 }
-.pf .spec-value {
-  display: table-cell;
-  font-weight: 700;
-  text-align: right;
-  width: 50%;
+.pf .spec-table .spec-value {
+  font-weight: 500;
+  text-align: left;
+  width: 70%;
   color: #000;
+  font-size: 11px;
 }
 
 /* Footer Styles */
