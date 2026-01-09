@@ -27,7 +27,7 @@
             <div class="subtitle">{{ doc.item_code }}</div>
         </div>
         <div class="h-right">
-            <img src="https://domosdelsur.cl/logo-black.svg" class="logo-img" alt="Domos del Sur" />
+          <img src="{{ frappe.utils.get_url(company_doc.company_logo) }}" />
         </div>
     </div>
 

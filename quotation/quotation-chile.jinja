@@ -69,7 +69,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
           {% endif %}
         </div>
         <div class="hr-logo">
-          <img src="{{ frappe.utils.get_url(frappe.get_value('Company', doc.company, 'logo')) }}" />
+          <img src="{{ frappe.utils.get_url(company_doc.company_logo) }}" />
         </div>
       </div>
     </div>
@@ -254,13 +254,6 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
               <span class="k">Neto</span>
               <span class="v">{{ clp(doc.total) }}</span>
             </div>
-
-            {% if doc.discount_amount and doc.discount_amount != 0 %}
-            <div class="trow">
-              <span class="k">Descuento</span>
-              <span class="v">- {{ clp(doc.discount_amount) }}</span>
-            </div>
-            {% endif %} 
             
             {# Impuestos (IVA u otros) #} 
             {% if doc.taxes and doc.taxes|length %} 
@@ -273,6 +266,13 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
                     {% endif %} 
                 {% endfor %} 
             {% endif %}
+            
+            {% if doc.discount_amount and doc.discount_amount != 0 %}
+            <div class="trow">
+              <span class="k">Descuento</span>
+              <span class="v">- {{ clp(doc.discount_amount) }}</span>
+            </div>
+            {% endif %} 
 
             <div class="trow grand">
               <span class="k">TOTAL</span>
