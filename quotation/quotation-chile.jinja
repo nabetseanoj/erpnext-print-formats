@@ -316,7 +316,7 @@ frappe.utils.fmt_money(val or 0, currency=currency, precision=0) }} {%- endmacro
   <!-- Footer -->
   <div class="footer">
     <div class="muted">
-      Documento generado desde ERPNext • {{
+      Documento generado desde ERP nubework.cl • {{
       frappe.format_date(frappe.utils.nowdate()) }}
     </div>
     <div class="muted right">Emitido por: {{ frappe.db.get_value("User", doc.owner, "full_name") or doc.owner }}</div>
